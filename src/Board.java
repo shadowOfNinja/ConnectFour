@@ -104,16 +104,17 @@ public class Board extends JPanel {
             }
         }
 
-        // TO DO: Think of a loop to search for this, rather than manually search all spots
-        // from chat GPT
-        /*
-            int ROWS = 6;
-            int COLS = 7;
+        // Search diagonals
+        int ROWS = 6;
+        int COLS = 7;
         // Check diagonals from bottom-left to top-right
         for (int r = ROWS - 1; r >= 3; r--) {
             for (int c = 0; c <= COLS - 4; c++) {
-                if (board[r][c] != ' ' && board[r][c] == board[r - 1][c + 1] && board[r][c] == board[r - 2][c + 2] && board[r][c] == board[r - 3][c + 3]) {
-                    return board[r][c];
+                if (this.pieces[r][c] == currentPlayer && this.pieces[r][c] == this.pieces[r - 1][c + 1] && this.pieces[r][c] == this.pieces[r - 2][c + 2] && this.pieces[r][c] == this.pieces[r - 3][c + 3]) {
+                    //return board[r][c];
+                    setWinner(r, c, r-1, c+1, r-2, c+2, r-3, c+3);
+                    winner = true;
+                    break;
                 }
             }
         }
@@ -121,112 +122,15 @@ public class Board extends JPanel {
         // Check diagonals from top-left to bottom-right
         for (int r = 0; r <= ROWS - 4; r++) {
             for (int c = 0; c <= COLS - 4; c++) {
-                if (board[r][c] != ' ' && board[r][c] == board[r + 1][c + 1] && board[r][c] == board[r + 2][c + 2] && board[r][c] == board[r + 3][c + 3]) {
-                    return board[r][c];
+                if (this.pieces[r][c] == currentPlayer && this.pieces[r][c] == this.pieces[r + 1][c + 1] && this.pieces[r][c] == this.pieces[r + 2][c + 2] && this.pieces[r][c] == this.pieces[r + 3][c + 3]) {
+                    //return board[r][c];
+                    setWinner(r, c, r+1, c+1, r+2, c+2, r+3, c+3);
+                    winner = true;
+                    break;
                 }
             }
         }
-         */
 
-        // Search diagonals
-        System.out.println("Searching diagonals");
-        if (this.pieces[0][0] == currentPlayer && this.pieces[1][1] == currentPlayer && this.pieces[2][2] == currentPlayer && this.pieces[3][3] == currentPlayer) {
-            setWinner(0,0,1,1,2,2,3,3);
-            winner = true;
-        }
-        else if (this.pieces[1][1] == currentPlayer && this.pieces[2][2] == currentPlayer && this.pieces[3][3] == currentPlayer && this.pieces[4][4] == currentPlayer) {
-            setWinner(1,1,2,2,3,3,4,4);
-            winner = true;
-        }
-        else if (this.pieces[2][2] == currentPlayer && this.pieces[3][3] == currentPlayer && this.pieces[4][4] == currentPlayer && this.pieces[5][5] == currentPlayer) {
-            setWinner(2, 2, 3, 3, 4, 4, 5, 5);
-            winner = true;
-        } 
-        else if (this.pieces[0][1] == currentPlayer && this.pieces[1][2] == currentPlayer && this.pieces[2][3] == currentPlayer && this.pieces[3][4] == currentPlayer) {
-            setWinner(0,1,1,2,2,3,3,4);
-            winner = true;
-        }
-        else if (this.pieces[1][2] == currentPlayer && this.pieces[2][3] == currentPlayer && this.pieces[3][4] == currentPlayer && this.pieces[4][5] == currentPlayer) {
-            setWinner(1,2,2,3,3,4,4,5);
-            winner = true;
-        }
-        else if (this.pieces[0][2] == currentPlayer && this.pieces[1][3] == currentPlayer && this.pieces[2][4] == currentPlayer && this.pieces[3][5] == currentPlayer) {
-            setWinner(0,2,1,3,2,4,3,5);
-            winner = true;
-        }
-        else if (this.pieces[1][0] == currentPlayer && this.pieces[2][1] == currentPlayer && this.pieces[3][2] == currentPlayer && this.pieces[4][3] == currentPlayer) {
-            setWinner(1,0,2,1,3,2,4,3);
-            winner = true;
-        }
-        else if (this.pieces[2][1] == currentPlayer && this.pieces[3][2] == currentPlayer && this.pieces[4][3] == currentPlayer && this.pieces[5][4] == currentPlayer) {
-            setWinner(2,1,3,2,4,3,5,4);
-            winner = true;
-        }
-        else if (this.pieces[3][2] == currentPlayer && this.pieces[4][3] == currentPlayer && this.pieces[5][4] == currentPlayer && this.pieces[6][5] == currentPlayer) {
-            setWinner(3,2,4,3,5,4,6,5);
-            winner = true;
-        }
-        else if (this.pieces[2][0] == currentPlayer && this.pieces[3][1] == currentPlayer && this.pieces[4][2] == currentPlayer && this.pieces[5][3] == currentPlayer) {
-            setWinner(2,0,3,1,4,2,5,3);
-            winner = true;
-        }
-        else if (this.pieces[3][1] == currentPlayer && this.pieces[4][2] == currentPlayer && this.pieces[5][3] == currentPlayer && this.pieces[6][4] == currentPlayer) {
-            setWinner(3,1,4,2,5,3,6,4);
-            winner = true;
-        }
-        else if (this.pieces[3][0] == currentPlayer && this.pieces[4][1] == currentPlayer && this.pieces[5][2] == currentPlayer && this.pieces[6][3] == currentPlayer) {
-            setWinner(3,0,4,1,5,2,6,3);
-            winner = true;
-        }
-        else if (this.pieces[6][0] == currentPlayer && this.pieces[5][1] == currentPlayer && this.pieces[4][2] == currentPlayer && this.pieces[5][3] == currentPlayer) {
-            setWinner(6,0,5,1,4,2,5,3);
-            winner = true;
-        }
-        else if (this.pieces[5][1] == currentPlayer && this.pieces[4][2] == currentPlayer && this.pieces[3][3] == currentPlayer && this.pieces[2][4] == currentPlayer) {
-            setWinner(5,1,4,2,3,3,2,4);
-            winner = true;
-        }
-        else if (this.pieces[4][2] == currentPlayer && this.pieces[3][3] == currentPlayer && this.pieces[2][4] == currentPlayer && this.pieces[1][5] == currentPlayer) {
-            setWinner(4,2,3,3,2,4,1,5);
-            winner = true;
-        } 
-        else if (this.pieces[6][1] == currentPlayer && this.pieces[5][2] == currentPlayer && this.pieces[4][3] == currentPlayer && this.pieces[3][4] == currentPlayer) {
-            setWinner(6,1,5,2,4,3,3,4);
-            winner = true;
-        }
-        else if (this.pieces[5][2] == currentPlayer && this.pieces[4][3] == currentPlayer && this.pieces[3][4] == currentPlayer && this.pieces[2][5] == currentPlayer) {
-            setWinner(5,2,4,3,3,4,2,5);
-            winner = true;
-        }
-        else if (this.pieces[6][2] == currentPlayer && this.pieces[5][3] == currentPlayer && this.pieces[4][4] == currentPlayer && this.pieces[3][5] == currentPlayer) {
-            setWinner(6,2,5,3,4,4,3,5);
-            winner = true;
-        }
-        else if (this.pieces[5][0] == currentPlayer && this.pieces[4][1] == currentPlayer && this.pieces[3][2] == currentPlayer && this.pieces[2][3] == currentPlayer) {
-            setWinner(5,0,4,1,3,2,2,3);
-            winner = true;
-        }
-        else if (this.pieces[4][1] == currentPlayer && this.pieces[3][2] == currentPlayer && this.pieces[2][3] == currentPlayer && this.pieces[1][4] == currentPlayer) {
-            setWinner(4,1,3,2,2,3,1,4);
-            winner = true;
-        }
-        else if (this.pieces[3][2] == currentPlayer && this.pieces[2][3] == currentPlayer && this.pieces[1][4] == currentPlayer && this.pieces[0][5] == currentPlayer) {
-            setWinner(3,2,2,3,1,4,0,5);
-            winner = true;
-        }
-        else if (this.pieces[4][0] == currentPlayer && this.pieces[3][1] == currentPlayer && this.pieces[2][2] == currentPlayer && this.pieces[1][3] == currentPlayer) {
-            setWinner(4,0,3,1,2,2,1,3);
-            winner = true;
-        }
-        else if (this.pieces[3][1] == currentPlayer && this.pieces[2][2] == currentPlayer && this.pieces[1][3] == currentPlayer && this.pieces[0][4] == currentPlayer) {
-            setWinner(3,1,2,2,1,3,0,4);
-            winner = true;
-        }
-        else if (this.pieces[3][0] == currentPlayer && this.pieces[2][1] == currentPlayer && this.pieces[1][2] == currentPlayer && this.pieces[0][3] == currentPlayer) {
-            setWinner(3,0,2,1,1,2,0,3);
-            winner = true;
-        }
-        
         return winner;
     }
 
