@@ -13,6 +13,34 @@ public class Board extends JPanel {
         repaint();
     }
 
+    public int getfirstAvailableRow(String column) {
+        int checkColumn = -1;
+        switch (column) {
+            case "A":
+                checkColumn = 0;
+                break;
+            case "B":
+                checkColumn = 1;
+                break;
+            case "C":
+                checkColumn = 2;
+                break;
+            case "D":
+                checkColumn = 3;
+                break;
+            case "E":
+                checkColumn = 4;
+                break;
+            case "F":
+                checkColumn = 5;
+                break;
+            case "G":
+                checkColumn = 6;
+                break;
+        }
+        return getfirstAvailableRow(checkColumn);
+    }
+
     public int getfirstAvailableRow(int column) {
         // loop through the column in the 2D array, and return the first available spot
         for (int i = 5; i >= 0; i--) {
@@ -56,6 +84,7 @@ public class Board extends JPanel {
         if (rowToPlace != -1) {
             System.out.println("Adding a piece to " + searchColumn + " " + rowToPlace);
             this.pieces[searchColumn][rowToPlace] = currentPlayer;
+            this.repaint();
             return true;
         }
 
@@ -165,8 +194,16 @@ public class Board extends JPanel {
                         // red
                         g.setColor(Color.RED);
                         break;
+                    case "F":
+                        // red - preview tiles
+                        g.setColor(Color.RED);
+                        break;
                     case "Y":
                         // yellow
+                        g.setColor(Color.YELLOW);
+                        break;
+                    case "H":
+                        // yellow - preview tiles
                         g.setColor(Color.YELLOW);
                         break;
                     case "G":
@@ -184,6 +221,18 @@ public class Board extends JPanel {
                 //System.out.println("Paint a circle for X: " + x + " Y: " + y);
             }
         }
+    }
+
+    public void clearPreviewPieces() {
+        for (int rows = 0; rows < 7; rows++) {
+            for (int columns = 0; columns < 6; columns++) {
+                if ((this.pieces[rows][columns] == 'F') || (this.pieces[rows][columns] == 'H')) {
+                    this.pieces[rows][columns] = 'W';
+                }
+            }
+        }
+        this.turns = 0;
+        this.repaint();
     }
 
 }
